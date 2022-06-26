@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import taskReducer from '../features/tasks/taskSlice';
+import {loadState} from '../services/StorageService.ts';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    tasks: taskReducer
   },
+  preloadedState: loadState()
 });

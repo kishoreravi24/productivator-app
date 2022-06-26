@@ -3,10 +3,24 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 import App from './App';
+import {saveState} from './services/StorageService.ts';
+import getDebouncedFunction from './utils/debounce'
 import reportWebVitals from './reportWebVitals';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
+const debouncedSaveState = getDebouncedFunction(() => {
+  console.log("Saving State...");
+  saveState(store.getState());
+}, 3000)
+
+store.subscribe(() => {
+  debouncedSaveState();
+})
+
+window.onbeforeunload = () => {
+  saveState(store.getState());
+}
 
 root.render(
   <React.StrictMode>
