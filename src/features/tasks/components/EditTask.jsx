@@ -23,7 +23,7 @@ const EditTask = ({ taskId, goBack, style }) => {
       done: task.done,
     },
     validate: {
-      title: (value) => value?.trim()?.length > 0,
+      title: (value) => value?.trim()?.length > 0 ? null : "Title is a required field",
     },
   });
   return (
@@ -40,7 +40,6 @@ const EditTask = ({ taskId, goBack, style }) => {
             {...form.getInputProps("title")}
             my={"md"}
             placeholder={"Task Title"}
-            required
           ></TextInput>
           <Textarea
             {...form.getInputProps("description")}
