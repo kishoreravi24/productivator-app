@@ -1,4 +1,6 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { getShortRandomID } from "../../utils/randomId";
+import { Task } from "./types/Task";
 
 export const taskSlice = createSlice({
   name: "tasks",
@@ -10,19 +12,20 @@ export const taskSlice = createSlice({
       state.tasks = action.payload;
     },
     addTask: (state, action) => {
-      const newTask = {
-        id: Date.now().toString(),
+      const newTask: Task = {
+        id: getShortRandomID(),
         title: action.payload,
         description: "",
         done: false,
-        timeStamp: Date.now(),
+        timeStamp: new Date(),
+        modifiedTimeStamp: new Date()
       };
       const { tasks } = state;
-      state.tasks = [newTask, ...tasks];
+      (state.tasks as Task[]) = [newTask, ...tasks];
     },
     updateTask: (state, action) => {
       const updateTask = action.payload;
-      const newTasks = state.tasks.map((taskItem) => {
+      const newTasks: Task[] = state.tasks.map((taskItem: Task) => {
         if (taskItem.id !== updateTask.id) return taskItem;
 
         return updateTask;
@@ -32,16 +35,16 @@ export const taskSlice = createSlice({
         .filter(({ done }) => !done)
         .sort(
           (comparingTask, comparedTask) =>
-            comparedTask.timeStamp - comparingTask.timeStamp
+            comparedTask.timeStamp.getTime() - comparingTask.timeStamp.getTime()
         );
       const newDoneTasks = newTasks
         .filter(({ done }) => done)
         .sort(
           (comparingTask, comparedTask) =>
-            comparedTask.timeStamp - comparingTask.timeStamp
+            comparedTask.timeStamp.getTime() - comparingTask.timeStamp.getTime()
         );
 
-      state.tasks = [...newTodoTasks, ...newDoneTasks];
+      (state.tasks as Task[]) = [...newTodoTasks, ...newDoneTasks];
     },
     deleteTask: (state, action) => {
       const deleteId = action.payload;
@@ -58,6 +61,6 @@ export const selectTaskById = createSelector(
   (tasks, taskId) => tasks.find(({ id }) => taskId === id)
 );
 
-export const { addTask, toggleDone, deleteTask, updateTaskList, updateTask } =
+export const { addTask, deleteTask, updateTaskList, updateTask } =
   taskSlice.actions;
 export default taskSlice.reducer;
