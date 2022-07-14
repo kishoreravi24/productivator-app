@@ -48,10 +48,12 @@ const ListItem = ({ task, ...props }) => {
               }}
             />
             <Text
+              component="p"
               transform="capitalize"
               size="lg"
               mx={"auto"}
-              {...(done && { color: "dimmed" })}
+              {...(done && { color: "dimmed", style: { textDecoration: 'line-through'} })}
+              inline
             >
               {title}
             </Text>
