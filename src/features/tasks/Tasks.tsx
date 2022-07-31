@@ -6,13 +6,14 @@ import {
   TextInput,
   ScrollArea,
   Header,
+  List,
 } from "@mantine/core";
 import { Plus } from "tabler-icons-react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addTask, selectTasksList } from "./taskSlice";
-import ListItem from './components/ListItem';
 import { Flipped, Flipper } from "react-flip-toolkit";
+import TaskItem from "./components/TaskItem";
 
 export function Tasks() {
   const [task, setTask] = useState("");
@@ -51,14 +52,16 @@ export function Tasks() {
         </form>
         <ScrollArea style={{ height: "85vh" }} px={'xs'}>
           <Flipper flipKey={taskList.map(({ timeStamp }) => timeStamp).join('')}>
-            <ul style={{ padding: 0 }}>
+            <List listStyleType={'none'}>
               {taskList
                 .map(taskItem => (
                   <Flipped key={taskItem.id} flipId={taskItem.id}>
-                    <ListItem task={taskItem} />
+                    <List.Item>
+                    <TaskItem task={taskItem} />
+                    </List.Item>
                   </Flipped>
                 ))}
-            </ul>
+            </List>
           </Flipper>
         </ScrollArea>
       </Container>
