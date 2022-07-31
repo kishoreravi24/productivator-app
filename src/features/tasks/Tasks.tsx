@@ -14,10 +14,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addTask, selectTasksList } from "./taskSlice";
 import { Flipped, Flipper } from "react-flip-toolkit";
 import TaskItem from "./components/TaskItem";
+import { Task } from './Task.d';
+import { FlipId } from "flip-toolkit/lib/types";
 
 export function Tasks() {
   const [task, setTask] = useState("");
-  const taskList = useSelector(selectTasksList);
+  const taskList: Task[] = useSelector(selectTasksList);
   const dispatch = useDispatch();
   return (
     <>
@@ -55,11 +57,11 @@ export function Tasks() {
             <List listStyleType={'none'}>
               {taskList
                 .map(taskItem => (
-                  <Flipped key={taskItem.id} flipId={taskItem.id}>
-                    <List.Item>
-                    <TaskItem task={taskItem} />
-                    </List.Item>
-                  </Flipped>
+                  <List.Item key={taskItem.id as React.Key}>
+                    <Flipped flipId={taskItem.id as FlipId}>
+                      <TaskItem task={taskItem} />
+                    </Flipped>
+                  </List.Item>
                 ))}
             </List>
           </Flipper>
