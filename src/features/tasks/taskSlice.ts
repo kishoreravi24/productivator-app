@@ -1,4 +1,5 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
+import {Task} from './Task.d';
 
 export const taskSlice = createSlice({
   name: "tasks",
@@ -41,7 +42,7 @@ export const taskSlice = createSlice({
             comparedTask.timeStamp - comparingTask.timeStamp
         );
 
-      state.tasksList = [...newTodoTasks, ...newDoneTasks];
+      state.tasksList = [...newTodoTasks, ...newDoneTasks] as Task[];
     },
     deleteTask: (state, action) => {
       const deleteId = action.payload;
@@ -53,10 +54,10 @@ export const taskSlice = createSlice({
 export const selectTasksList = (state) => state.tasks.tasksList;
 
 export const selectTaskById = createSelector(
-  [, (state, taskId) => taskId],
+  [, (_, taskId) => taskId],
   (tasks, taskId) => tasks.find(({ id }) => taskId === id)
 );
 
-export const { addTask, toggleDone, deleteTask, updateTaskList, updateTask } =
+export const { addTask, deleteTask, updateTaskList, updateTask } =
   taskSlice.actions;
 export default taskSlice.reducer;
