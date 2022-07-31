@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Container,
   Title,
@@ -8,6 +8,8 @@ import {
   Header,
   List,
 } from "@mantine/core";
+import { useFocusTrap, useFocusReturn } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { Plus } from "tabler-icons-react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,7 +20,17 @@ import { Task } from './Task.d';
 import { FlipId } from "flip-toolkit/lib/types";
 
 export function Tasks() {
-  const [task, setTask] = useState("");
+  const form = useForm({
+    initialValues: {
+      task: '',
+    },
+    validate: {
+      task: (value) => value.trim().length ? null : "Task title must not be empty"
+    }
+  })
+
+  const focusRef = useFocusTrap(true);
+  const focusReturn = useFocusReturn({opened: true});
   const taskList: Task[] = useSelector(selectTasksList);
   const dispatch = useDispatch();
   return (
@@ -28,29 +40,23 @@ export function Tasks() {
           <Title>Productivator</Title>
         </Header>
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (!task.trim().length)
-              return;
+          onSubmit={form.onSubmit(({task}) => {
             dispatch(addTask(task));
-            setTask("");
-          }}
+            form.reset();
+            focusReturn();
+          })}
         >
           <TextInput
-            id="add-task"
+            ref={focusRef}
+            {...form.getInputProps('task')}
             placeholder="Enter task here"
-            value={task}
             style={{ width: "100%", padding: "0.25rem 0.5rem" }}
-            onChange={(e) => {
-              setTask(e.target.value);
-              e.target.focus();
-            }}
             rightSection={<ActionIcon color={"blue"} variant={"light"} type={"submit"}>
               <Plus />
             </ActionIcon>}
             autoFocus
-            required />
+            required 
+          />
         </form>
         <ScrollArea style={{ height: "85vh" }} px={'xs'}>
           <Flipper flipKey={taskList.map(({ timeStamp }) => timeStamp).join('')}>
