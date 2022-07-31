@@ -3,11 +3,11 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 export const taskSlice = createSlice({
   name: "tasks",
   initialState: {
-    tasks: [],
+    tasksList: [],
   },
   reducers: {
     updateTaskList: (state, action) => {
-      state.tasks = action.payload;
+      state.tasksList = action.payload;
     },
     addTask: (state, action) => {
       const newTask = {
@@ -17,12 +17,12 @@ export const taskSlice = createSlice({
         done: false,
         timeStamp: Date.now(),
       };
-      const { tasks } = state;
-      state.tasks = [newTask, ...tasks];
+      const { tasksList } = state;
+      state.tasksList = [newTask, ...tasksList];
     },
     updateTask: (state, action) => {
       const updateTask = action.payload;
-      const newTasks = state.tasks.map((taskItem) => {
+      const newTasks = state.tasksList.map((taskItem) => {
         if (taskItem.id !== updateTask.id) return taskItem;
 
         return updateTask;
@@ -41,20 +41,19 @@ export const taskSlice = createSlice({
             comparedTask.timeStamp - comparingTask.timeStamp
         );
 
-      state.tasks = [...newTodoTasks, ...newDoneTasks];
+      state.tasksList = [...newTodoTasks, ...newDoneTasks];
     },
     deleteTask: (state, action) => {
       const deleteId = action.payload;
-      state.tasks = state.tasks.filter(({ id }) => id !== deleteId);
+      state.tasksList = state.tasksList.filter(({ id }) => id !== deleteId);
     },
   },
 });
 
-export const selectTasksList = (state) => state.tasks.tasks;
+export const selectTasksList = (state) => state.tasks.tasksList;
 
-const selectTaskId = (state, taskId) => taskId;
 export const selectTaskById = createSelector(
-  [selectTasksList, selectTaskId],
+  [, (state, taskId) => taskId],
   (tasks, taskId) => tasks.find(({ id }) => taskId === id)
 );
 
