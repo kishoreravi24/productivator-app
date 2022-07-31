@@ -40,7 +40,6 @@ const TaskItem = ({ task, ...props }) => {
       <Container
         py={0}
         px={"sm"}
-        {...props}
         tabIndex={0}
         className={classes.container}
       >
@@ -56,6 +55,7 @@ const TaskItem = ({ task, ...props }) => {
               component="p"
               transform="capitalize"
               size="lg"
+              py={0}
               {...(done && {
                 color: "dimmed",
                 style: { textDecoration: "line-through" },

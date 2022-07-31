@@ -54,7 +54,7 @@ export function Tasks() {
         </form>
         <ScrollArea style={{ height: "85vh" }} px={'xs'}>
           <Flipper flipKey={taskList.map(({ timeStamp }) => timeStamp).join('')}>
-            <List listStyleType={'none'}>
+            <List listStyleType={'none'} my={'xs'}>
               {taskList
                 .map(taskItem => (
                   <List.Item key={taskItem.id as React.Key}>
