@@ -54,7 +54,7 @@ export const taskSlice = createSlice({
 export const selectTasksList = (state) => state.tasks.tasksList;
 
 export const selectTaskById = createSelector(
-  [, (_, taskId) => taskId],
+  [selectTasksList, (_, taskId) => taskId],
   (tasks, taskId) => tasks.find(({ id }) => taskId === id)
 );
 
