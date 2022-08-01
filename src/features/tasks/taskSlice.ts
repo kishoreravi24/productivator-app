@@ -1,4 +1,6 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { DEFAULT_SECTION_ID } from "../sections/sectionSlice";
+import {Task} from './Task.d';
 
 export const taskSlice = createSlice({
   name: "tasks",
@@ -10,9 +12,11 @@ export const taskSlice = createSlice({
       state.tasksList = action.payload;
     },
     addTask: (state, action) => {
+      const {sectionId, title} = action.payload;
       const newTask = {
         id: Date.now().toString(),
-        title: action.payload,
+        sectionId,
+        title,
         description: "",
         done: false,
         timeStamp: Date.now(),
@@ -41,7 +45,7 @@ export const taskSlice = createSlice({
             comparedTask.timeStamp - comparingTask.timeStamp
         );
 
-      state.tasksList = [...newTodoTasks, ...newDoneTasks];
+      state.tasksList = [...newTodoTasks, ...newDoneTasks] as Task[];
     },
     deleteTask: (state, action) => {
       const deleteId = action.payload;
@@ -50,13 +54,20 @@ export const taskSlice = createSlice({
   },
 });
 
-export const selectTasksList = (state) => state.tasks.tasksList;
+export const selectTasksList = createSelector([
+  (state) => state.tasks.tasksList,
+  (_, sectionId) => sectionId,
+], (tasksList, sectionId) => {
+  if(sectionId === DEFAULT_SECTION_ID) return tasksList;
+
+  return tasksList.filter(({sectionId: itemSectionId}) => itemSectionId === sectionId);
+});
 
 export const selectTaskById = createSelector(
-  [, (state, taskId) => taskId],
+  [selectTasksList, (_, taskId) => taskId],
   (tasks, taskId) => tasks.find(({ id }) => taskId === id)
 );
 
-export const { addTask, toggleDone, deleteTask, updateTaskList, updateTask } =
+export const { addTask, deleteTask, updateTaskList, updateTask } =
   taskSlice.actions;
 export default taskSlice.reducer;
