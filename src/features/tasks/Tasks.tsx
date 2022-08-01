@@ -18,6 +18,7 @@ import { Flipped, Flipper } from "react-flip-toolkit";
 import TaskItem from "./components/TaskItem";
 import { Task } from './Task.d';
 import { FlipId } from "flip-toolkit/lib/types";
+
 import { selectActiveSection } from "../sections/sectionSlice";
 
 export function Tasks() {
@@ -34,6 +35,7 @@ export function Tasks() {
   const focusReturn = useFocusReturn({opened: true});
   const activeSection = useSelector(selectActiveSection);
   const taskList: Task[] = useSelector((state) => selectTasksList(state, activeSection.id));
+
   const dispatch = useDispatch();
   return (
     <>
