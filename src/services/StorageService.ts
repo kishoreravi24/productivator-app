@@ -3,7 +3,13 @@ export function loadState():any {
   try {
     const serializedState = localStorage.getItem(KEY);
     if (!serializedState) return undefined;
-    return JSON.parse(serializedState);
+    const  storedJSON= JSON.parse(serializedState);
+    if(storedJSON.tasks.hasOwnProperty('tasks')){
+      const {tasks: {tasks=[]}} = storedJSON;
+      return {tasks: {tasksList: tasks}}
+    }
+    
+    return storedJSON;
   } catch (e) {
     console.log(e);
     return undefined;
