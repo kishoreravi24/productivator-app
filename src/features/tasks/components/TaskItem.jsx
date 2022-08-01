@@ -16,7 +16,7 @@ const useContainerStyles = createStyles((theme) => ({
   }
 }))
 
-const TaskItem = ({ task, ...props }) => {
+const TaskItem = ({ task }) => {
   const [drawState, drawHandlers] = useDisclosure(false);
   const [isEdit, setEdit] = useState(false);
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const TaskItem = ({ task, ...props }) => {
         />}
       </Drawer>
       <Container
-        py={0}
+        py={'xs'}
         px={"sm"}
         tabIndex={0}
         className={classes.container}
@@ -54,8 +54,9 @@ const TaskItem = ({ task, ...props }) => {
             <Text
               component="p"
               transform="capitalize"
-              size="lg"
+              size={["sm", "md"]}
               py={0}
+              my={0}
               {...(done && {
                 color: "dimmed",
                 style: { textDecoration: "line-through" },

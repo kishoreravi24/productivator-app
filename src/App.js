@@ -16,14 +16,14 @@ function App() {
 
   return (
     <MantineProvider
-      theme={{ colorScheme: "dark" }}
+      theme={{ colorScheme: "dark", overflow: 'hidden' }}
       withGlobalStyles
       withNormalizeCSS
     >
-      <Header px={"md"} py={"sm"}>
+      <Header px={"md"} py={"xs"}>
         <Group position="apart">
-          <Title>Productivator</Title>
-          <Burger onClick={drawHandle.toggle} />
+          <Title order={3}>Productivator</Title>
+          <Burger size={'sm'} onClick={drawHandle.toggle} />
         </Group>
       </Header>
       <nav>

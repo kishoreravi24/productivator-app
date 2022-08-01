@@ -5,7 +5,6 @@ import {
   ActionIcon,
   TextInput,
   ScrollArea,
-  Header,
   List,
 } from "@mantine/core";
 import { useFocusTrap, useFocusReturn } from '@mantine/hooks';
@@ -32,7 +31,7 @@ export function Tasks() {
   })
 
   const focusRef = useFocusTrap(true);
-  const focusReturn = useFocusReturn({opened: true});
+  const focusReturn = useFocusReturn({ opened: true });
   const activeSection = useSelector(selectActiveSection);
   const taskList: Task[] = useSelector((state) => selectTasksList(state, activeSection.id));
 
@@ -40,12 +39,10 @@ export function Tasks() {
   return (
     <>
       <Container p={'md'}>
-        <Header height={'3rem'} m={8}>
-          <Title order={3}>{activeSection.name}</Title>
-        </Header>
+        <Title order={4}>{activeSection.name}</Title>
         <form
-          onSubmit={form.onSubmit(({task}) => {
-            dispatch(addTask({title: task, sectionId: activeSection.id}));
+          onSubmit={form.onSubmit(({ task }) => {
+            dispatch(addTask({ title: task, sectionId: activeSection.id }));
             form.reset();
             focusReturn();
           })}
@@ -59,10 +56,10 @@ export function Tasks() {
               <Plus />
             </ActionIcon>}
             autoFocus
-            required 
+            required
           />
         </form>
-        <ScrollArea style={{ height: "85vh" }} px={'xs'}>
+        <ScrollArea.Autosize maxHeight={'72.5vh'} px={'xs'}>
           <Flipper flipKey={taskList.map(({ timeStamp }) => timeStamp).join('')}>
             <List listStyleType={'none'} my={'xs'}>
               {taskList
@@ -75,7 +72,7 @@ export function Tasks() {
                 ))}
             </List>
           </Flipper>
-        </ScrollArea>
+        </ScrollArea.Autosize>
       </Container>
     </>
   );
