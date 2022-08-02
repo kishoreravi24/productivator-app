@@ -69,8 +69,10 @@ const TaskItem = ({ task }) => {
             {description?.length && <AlignRight />}
 
             <Menu
+              withinPortal
+              position="bottom-end"
               styles={(theme) => ({
-                body: { background: theme.colors.dark[5] },
+                body: { background: theme.colors.dark[5]},
               })}
             >
               <Menu.Target>
@@ -81,7 +83,7 @@ const TaskItem = ({ task }) => {
                   icon={<ArrowsDiagonal />}
                   onClick={drawHandlers.open}
                 >
-                  Expand
+                  Open
                 </Menu.Item>
                 <Menu.Item
                   color={"red"}
