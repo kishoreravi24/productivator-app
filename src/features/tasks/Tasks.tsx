@@ -6,10 +6,12 @@ import {
   TextInput,
   ScrollArea,
   List,
+  Group,
+  Menu,
 } from "@mantine/core";
 import { useFocusTrap, useFocusReturn } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
-import { Plus } from "tabler-icons-react";
+import { Dots, Plus, Trash } from "tabler-icons-react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addTask, selectTasksList } from "./taskSlice";
@@ -18,7 +20,7 @@ import TaskItem from "./components/TaskItem";
 import { Task } from './Task.d';
 import { FlipId } from "flip-toolkit/lib/types";
 
-import { selectActiveSection } from "../sections/sectionSlice";
+import { DEFAULT_SECTION_ID, deleteSection, selectActiveSection } from "../sections/sectionSlice";
 
 export function Tasks() {
   const form = useForm({
@@ -39,7 +41,23 @@ export function Tasks() {
   return (
     <>
       <Container p={'md'}>
-        <Title order={4}>{activeSection.name}</Title>
+        <Group position="apart">
+          <Title order={4}>{activeSection.name}</Title>
+          {activeSection.id !== DEFAULT_SECTION_ID && (
+            <Menu withinPortal position="bottom-end">
+              <Menu.Target><ActionIcon><Dots /></ActionIcon></Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Item
+                  icon={<Trash />}
+                  color={'red'}
+                  onClick={() => dispatch(deleteSection(activeSection.id))}
+                >
+                  Delete
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          )}
+        </Group>
         <form
           onSubmit={form.onSubmit(({ task }) => {
             dispatch(addTask({ title: task, sectionId: activeSection.id }));
