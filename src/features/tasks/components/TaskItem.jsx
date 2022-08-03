@@ -34,7 +34,7 @@ const TaskItem = ({ task }) => {
         onClose={drawHandlers.close}
       >
         {drawState && <ViewTask
-          {...{ ...task, isEdit, setEdit, drawToggle: drawHandlers.toggle }}
+          {...{ task, isEdit, setEdit, drawToggle: drawHandlers.toggle }}
         />}
       </Drawer>
       <Container

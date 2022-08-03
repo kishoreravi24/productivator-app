@@ -29,7 +29,7 @@ export const taskSlice = createSlice({
       const newTasks = state.tasksList.map((taskItem) => {
         if (taskItem.id !== updateTask.id) return taskItem;
 
-        return updateTask;
+        return {...taskItem, ...updateTask};
       });
 
       const newTodoTasks = newTasks

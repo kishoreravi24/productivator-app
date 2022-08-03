@@ -14,7 +14,8 @@ import { useDispatch } from "react-redux";
 import { updateTask } from "../taskSlice";
 import EditableType from "./EditableType.tsx";
 
-const ViewTask = ({ id, title, done, description, drawToggle }) => {
+const ViewTask = ({ task, drawToggle }) => {
+  const {id, title, description, done} = task;
   const dispatch = useDispatch();
   return (
     <>
@@ -25,7 +26,7 @@ const ViewTask = ({ id, title, done, description, drawToggle }) => {
               <Checkbox
                 checked={done}
                 onChange={() => {
-                  dispatch(updateTask({ id, title, description, done: !done }));
+                  dispatch(updateTask({ ...task, done: !done }));
                 }}
               />
               <EditableType
@@ -35,7 +36,7 @@ const ViewTask = ({ id, title, done, description, drawToggle }) => {
                 textSize={"lg"}
                 setText={(updatedTitle) => {
                   dispatch(
-                    updateTask({ id, description, done, title: updatedTitle })
+                    updateTask({  ...task, title: updatedTitle })
                   );
                 }}
               />
@@ -50,7 +51,7 @@ const ViewTask = ({ id, title, done, description, drawToggle }) => {
             inputType="textarea"
             setText={(updatedDescription) => {
               dispatch(
-                updateTask({ id, title, done, description: updatedDescription })
+                updateTask({ ...task, description: updatedDescription })
               );
             }}
           />
