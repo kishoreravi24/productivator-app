@@ -78,15 +78,15 @@ export function Tasks() {
           />
         </form>
         <ScrollArea.Autosize maxHeight={'72.5vh'} px={'xs'}>
-          <Flipper flipKey={taskList.map(({ timeStamp }) => timeStamp).join('')}>
+          <Flipper flipKey={taskList.map(({ id }) => id).join('')}>
             <List listStyleType={'none'} my={'xs'}>
               {taskList
                 .map(taskItem => (
-                  <List.Item key={taskItem.id as React.Key}>
-                    <Flipped flipId={taskItem.id as FlipId}>
+                  <Flipped flipId={taskItem.id as FlipId}>
+                    <List.Item key={taskItem.id as React.Key}>
                       <TaskItem task={taskItem} />
-                    </Flipped>
-                  </List.Item>
+                    </List.Item>
+                  </Flipped>
                 ))}
             </List>
           </Flipper>

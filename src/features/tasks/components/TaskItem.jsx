@@ -24,7 +24,6 @@ const TaskItem = ({ task }) => {
 
   const { id, title, description, done, dueDateStamp } = task;
   const dueDate = (!isNaN(dueDateStamp)) ? new Date(dueDateStamp) : null;
-  console.log(dueDate);
   return (
     <>
       <Drawer
