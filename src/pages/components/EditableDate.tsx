@@ -55,7 +55,7 @@ function EditableDate({
                 >
                     <DatePicker
                         {...form.getInputProps("date")}
-                        onChange={blurHandler}
+                        onBlur={blurHandler}
                         minDate={new Date()}
                         dropdownType="modal"
                         {...{
