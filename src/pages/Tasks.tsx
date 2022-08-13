@@ -46,7 +46,7 @@ export default function Tasks() {
   return (
     <>
       <Container px={0}>
-        <Stack p={'md'} style={{borderTop: sectionId !== DEFAULT_SECTION_ID ? `0.5rem solid ${activeSection.accent || 'gray'}` : ''}}>
+        <Stack p={'md'} style={{ borderTop: sectionId !== DEFAULT_SECTION_ID ? `0.5rem solid ${activeSection.accent || 'gray'}` : '' }}>
           <Group position="apart" >
             <Title order={4} >{activeSection.name}</Title>
             {activeSection.id !== DEFAULT_SECTION_ID && (
@@ -57,7 +57,7 @@ export default function Tasks() {
                     icon={<Trash />}
                     color={'red'}
                     onClick={() => {
-                      navigate('/tasks', {replace: true});
+                      navigate('/tasks', { replace: true });
                       dispatch(deleteSection(activeSection.id))
                     }}
                   >
@@ -94,7 +94,7 @@ export default function Tasks() {
                 .map(taskItem => (
                   <Flipped flipId={taskItem.id as FlipId} key={taskItem.id as React.Key}>
                     <List.Item key={taskItem.id as React.Key}>
-                      <TaskItem section={activeSection} task={taskItem} showGroup={sectionId === DEFAULT_SECTION_ID}/>
+                      <TaskItem section={activeSection} task={taskItem} showGroup={sectionId === DEFAULT_SECTION_ID && taskItem.sectionId !== DEFAULT_SECTION_ID} />
                     </List.Item>
                   </Flipped>
                 ))}
