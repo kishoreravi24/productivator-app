@@ -50,7 +50,7 @@ const ViewTask = ({ task, drawToggle }) => {
             TypeComponent={Text}
             TypeComponentProps={{color: 'dimmed', pt: 0, size: 'sm'}}
             placeHolder={'Pick a due date'}
-            date={new Date(task.dueDateStamp)}
+            date={task.dueDateStamp && new Date(task.dueDateStamp)}
             setDate={(date) => {
               dispatch(
                 updateTask({...task, dueDateStamp: date.getTime()})
