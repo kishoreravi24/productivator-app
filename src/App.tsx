@@ -18,7 +18,7 @@ function App() {
       <Router>
         <NavContainer>
           <Tooltip label={'All Tasks'}>
-            <NavLink to='/tasks'>
+            <NavLink to='/tasks' end>
               <ActionIcon><ListCheck /></ActionIcon>
             </NavLink>
           </Tooltip>
