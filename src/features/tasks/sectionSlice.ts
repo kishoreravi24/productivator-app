@@ -1,5 +1,5 @@
 import { createSelector, createSlice, nanoid } from '@reduxjs/toolkit';
-import {SectionId, SectionItem} from '../../types/Section';
+import {SectionId, SectionItem} from '../../types/Section.d';
 import { randomColorGenerator } from '../../utils/colors';
 
 export const DEFAULT_SECTION_ID = "ALL" as SectionId;
@@ -57,7 +57,7 @@ export const sectionSlice = createSlice({
 export const selectActiveSection = state => {
     return state.sections.sectionsList.find(({id}) => id === state.sections.activeSectionId)
 };
-export const selectSectionList = state => state.sections.sectionsList;
+export const selectSectionList = state => state.sections.sectionsList.filter(({id}) => id !== DEFAULT_SECTION_ID);
 
 export const selectSectionById = createSelector(
     [
