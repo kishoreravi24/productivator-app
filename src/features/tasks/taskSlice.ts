@@ -52,6 +52,16 @@ export const taskSlice = createSlice({
       state.tasksList = state.tasksList.filter(({ id }) => id !== deleteId);
     },
   },
+  extraReducers: {
+    "sections/deleteSection": (state, action) => {
+      const deletedSectionId = action.payload
+      state.tasksList = state.tasksList.map(taskItem => {
+        if(taskItem.sectionId !== deletedSectionId) return taskItem;
+        
+        return {...taskItem ,sectionId: DEFAULT_SECTION_ID};
+      })
+    },
+  }
 });
 
 export const selectTasksList = createSelector([
