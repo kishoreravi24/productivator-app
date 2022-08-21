@@ -8,7 +8,7 @@ const useContaienrStyles = createStyles((theme) => ({
         flexFlow: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        position: 'absolute',
+        position: 'fixed',
         width: '90%',
         padding: '0.3rem 0',
         background: theme.colors.dark[6],
