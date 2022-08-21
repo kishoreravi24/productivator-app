@@ -1,7 +1,8 @@
 import React from 'react';
 import { createStyles } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks'
 
-const useContaienrStyles = createStyles((theme) => ({
+const useContaienrStyles = createStyles((theme, {height}: {height: Number}) => ({
 
     'container': {
         display: 'flex',
@@ -14,7 +15,7 @@ const useContaienrStyles = createStyles((theme) => ({
         background: theme.colors.dark[6],
         boxShadow: theme.shadows.md,
         borderRadius: theme.radius.md,
-        bottom: '1rem',
+        top: `calc(${height}px - 5rem)`,
         left: '5%',
 
         'a': {
@@ -61,7 +62,10 @@ const useContaienrStyles = createStyles((theme) => ({
 }))
 
 const NavContainer = ({ children }) => {
-    const { classes } = useContaienrStyles();
+    const {height} = useViewportSize();
+    console.log(height);
+    
+    const { classes } = useContaienrStyles({height});
     return (
         <nav className={classes.container}>
             {children}
