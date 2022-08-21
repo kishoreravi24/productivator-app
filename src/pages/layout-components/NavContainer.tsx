@@ -1,8 +1,9 @@
 import React from 'react';
 import { createStyles } from '@mantine/core';
-import { useViewportSize } from '@mantine/hooks'
 
-const useContaienrStyles = createStyles((theme, {height}: {height: Number}) => ({
+import { useIntersection, useViewportSize } from '@mantine/hooks'
+
+const useContaienrStyles = createStyles((theme, {height, isVisible}: {height: Number, isVisible: Boolean}) => ({
 
     'container': {
         display: 'flex',
@@ -15,7 +16,7 @@ const useContaienrStyles = createStyles((theme, {height}: {height: Number}) => (
         background: theme.colors.dark[6],
         boxShadow: theme.shadows.md,
         borderRadius: theme.radius.md,
-        top: `calc(${height}px - 5rem)`,
+        top: `calc(${height}px - ${isVisible ? 5 : 7}rem)`,
         left: '5%',
 
         'a': {
@@ -62,12 +63,14 @@ const useContaienrStyles = createStyles((theme, {height}: {height: Number}) => (
 }))
 
 const NavContainer = ({ children }) => {
+    const {ref, entry} = useIntersection();
     const {height} = useViewportSize();
     console.log(height);
     
-    const { classes } = useContaienrStyles({height});
+    const { classes } = useContaienrStyles({height, isVisible: entry?.isIntersecting});
+
     return (
-        <nav className={classes.container}>
+        <nav ref={ref} className={classes.container}>
             {children}
         </nav>
     )
